@@ -9,8 +9,8 @@ export default function Home() {
   useEffect(() => {
     async function fetchData() {
       const result = await getWeatherdata();
-      console.log(result.data);
-      setData(result.data);
+      console.log(result?.data);
+      setData(result?.data);
     }
 
     fetchData();
