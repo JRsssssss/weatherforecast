@@ -13,6 +13,12 @@ export interface weatherData{
             night: number,
         },
         speed: number,
+        temp:{
+            day: number,
+            eve: number,
+            morn: number,
+            night: number
+        },
         weather: Array<{
             description: string,
         }>
