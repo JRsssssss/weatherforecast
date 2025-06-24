@@ -2,13 +2,25 @@
 'use client';
 
 import React, { useEffect, useState } from "react";
-import { weatherData } from "./interface/weather";
+import { halfmonthWeatherData } from "./interface/16dailyweather";
 import Card from "@/card/page";
+import HourlyForecast from "./hourlyforecast_card/page";
+import SixteenDayForecast from "./halfmonthforecast_card/page";
+
 export default function Home() {
+  const [namePlace, setNamePlace] = useState('Bangkok');
+  const [inputValue, setInputValue] = useState('');
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setNamePlace(inputValue);
+  }
+  
+
   return (
     // delete the border of the first div
     <div className="items-center content-center min-h-screen border border-amber-300">
-      <form className="max-w-md mx-auto mb-10">   
+      <form className="max-w-md mx-auto mb-10" onSubmit={handleSubmit}>   
           <label className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
           <div className="relative">
               <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -16,11 +28,19 @@ export default function Home() {
                       <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                   </svg>
               </div>
-              <input type="search" id="default-search" className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter country name..." required />
+              <input type="search" 
+                     id="default-search" 
+                     className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
+                     placeholder="Enter country name..." 
+                     value={inputValue}
+                     onChange={e => setInputValue(e.target.value)}
+                     required />
               <button type="submit" className="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Search</button>
           </div>
       </form>
-      <Card></Card>
+      <Card namePlace={namePlace}></Card>
+      <HourlyForecast namePlace={namePlace}></HourlyForecast>
+      <SixteenDayForecast namePlace={namePlace}></SixteenDayForecast>
     </div>
   );
 }

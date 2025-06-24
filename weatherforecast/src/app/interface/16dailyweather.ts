@@ -1,4 +1,4 @@
-export interface weatherData{
+export interface halfmonthWeatherData{
     city:{
         country: string,
         name: string,
