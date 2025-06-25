@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { CardProps } from '@/app/interface/cardprops';
-import { halfmonthWeatherData } from '@/app/interface/16dailyweather';
 import { currentWeatherData } from '@/app/interface/currentweather';
 import React, { useEffect, useState } from 'react'
 import { WiNightAltRain } from 'react-icons/wi';
+import { getWeatherIcon } from '@/app/Components/Icon';
 
 export default function Card({namePlace}: CardProps) {
   const [data, setData] = useState<currentWeatherData | null>(null);
@@ -32,7 +32,7 @@ export default function Card({namePlace}: CardProps) {
         // delete the border
         <div className='flex flex-col border'>
           <div className='flex flex-col border'>
-            <WiNightAltRain size={48} color='#000'/>
+            {getWeatherIcon(data.weather[0].description, data.coord.dt)}
             <h3>{data.name}</h3>
             <h3>{data.weather[0].description}</h3>
             <h3>{data.main.temp} celcius</h3>

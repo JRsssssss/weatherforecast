@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import { hourlyWeatherData } from '../interface/hourlyweather'
 import { CardProps } from '../interface/cardprops';
-
+import { getWeatherIcon } from '../Components/Icon';
 
 export default function HourlyForecast({namePlace} :CardProps) {
     const [data, setData] = useState<hourlyWeatherData|null>(null);
@@ -25,17 +25,21 @@ export default function HourlyForecast({namePlace} :CardProps) {
     }, [namePlace]);
 
     return (
-        <div className='flex rounded-lg border border-gray-200 shadow-sm max-w-7xl mx-auto mt-4 p-4 overflow-x-scroll'>
-            <div className='flex flex-row gap-4'>
-                {data?.list.slice(6, 30).map((item,index)=>(
-                    <div key = {index} className='flex flex-col border rounded-md shadow-sm bg-blue-50'>
-                        <div>{item.dt_txt}</div>
-                        <div>{item.main.temp}</div>
-                        <div>{item.weather[0].description}</div>
-                    </div>
-                ))}
+        <div className='flex flex-col'>
+            Hourly Forecast
+            <div className='flex rounded-lg border border-gray-200 shadow-sm max-w-7xl mx-auto mt-4 p-4 overflow-x-scroll'>
+                <div className='flex flex-row gap-4'>
+                    {data?.list.slice(6, 30).map((item,index)=>(
+                        <div key = {index} className='flex flex-col border rounded-md shadow-sm bg-blue-50'>
+                            <div>{item.dt_txt}</div>
+                            <div>{item.main.temp}</div>
+                            {getWeatherIcon((item.weather[0].description),(item.dt))}
+                            <div>{item.weather[0].description}</div>
+                        </div>
+                    ))}
+                </div>
+                
             </div>
-            
         </div>
     )
 }
