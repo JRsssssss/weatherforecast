@@ -32,7 +32,9 @@ export default function Card({namePlace}: CardProps) {
         // delete the border
         <div className='flex flex-col border'>
           <div className='flex flex-col border'>
-            {getWeatherIcon(data.weather[0].description, data.coord.dt)}
+            <div className='text-[72px]'>
+              {getWeatherIcon(data.weather[0].description, data.coord.dt, data.timezone)}
+            </div>
             <h3>{data.name}</h3>
             <h3>{data.weather[0].description}</h3>
             <h3>{data.main.temp} celcius</h3>

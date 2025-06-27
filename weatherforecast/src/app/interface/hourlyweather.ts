@@ -1,4 +1,7 @@
 export interface hourlyWeatherData{
+    city:{
+        timezone: number,
+    }
     list: Array<{
         dt: number,
         main:{

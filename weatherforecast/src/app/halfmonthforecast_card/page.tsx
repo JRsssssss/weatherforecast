@@ -33,7 +33,7 @@ export default function SixteenDayForecast({namePlace} :CardProps) {
                     <div key = {index} className='flex flex-col border rounded-md shadow-sm bg-blue-50'>
                         <div>{item.dt}</div>
                         <div>{item.temp.day}</div>
-                        {getWeatherIcon(item.weather[0].description, item.dt)}
+                        {getWeatherIcon(item.weather[0].description, item.dt, data.city.timezone)}
                         <div>{item.weather[0].description}</div>
                     </div>
                 ))}

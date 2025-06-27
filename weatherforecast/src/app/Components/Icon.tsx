@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { error } from 'console';
 import React, { useEffect, useState } from 'react'
 import { WiDaySunny, WiNightClear, WiDayCloudy, WiNightAltCloudy, 
          WiCloudy, WiSnowflakeCold, WiSmoke, WiTornado, WiFog, WiDust, 
@@ -16,14 +15,24 @@ import { WiDaySunny, WiNightClear, WiDayCloudy, WiNightAltCloudy,
          WiNightAltShowers,
          WiAlien} from "react-icons/wi";
 
-function isNight(dt: number): boolean{
-    const hour = new Date(dt * 1000).getHours();
+// function isNight(dt: number, timezone: number): boolean{
+//     const hour = new Date((dt + timezone) * 1000).getUTCHours();
+//     console.log(dt , hour);
+//     return hour < 6 || hour >= 18;
+// }
+
+function isNight(dt: number, timezone: number): boolean {
+    const localTimestamp = (dt + timezone) * 1000;
+    const localDate = new Date(localTimestamp);
+    const hour = localDate.getUTCHours();
+    console.log("Hour in local Date:", hour);
     return hour < 6 || hour >= 18;
 }
 
-export const getWeatherIcon = (description: string, dt: number) => {
+
+export const getWeatherIcon = (description: string, dt: number, timezone: number) => {
     const desc = description.toLowerCase();
-    const night = isNight(dt);
+    const night = isNight(dt, timezone);
 
     if(desc.includes('clear')){
         return night
@@ -63,10 +72,10 @@ export const getWeatherIcon = (description: string, dt: number) => {
             :<WiDayRain size={48} color='#000'/>
         }
         return night
-        ?<WiDayShowers size={48} color='#000'/>
-        :<WiNightAltShowers size={48} color='#000'/>
+        ?<WiNightAltShowers size={48} color='#000'/>
+        :<WiDayShowers size={48} color='#000'/>
     }
-    if(desc.includes('drizzle')){
+    if(desc.includes('dirzzle')){
         return night
         ?<WiNightAltRain size={48} color='#000'/>
         :<WiDayRain size={48} color='#000'/>

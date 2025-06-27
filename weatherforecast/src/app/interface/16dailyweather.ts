@@ -2,6 +2,7 @@ export interface halfmonthWeatherData{
     city:{
         country: string,
         name: string,
+        timezone: number,
     }
     list: Array<{
         deg: number,

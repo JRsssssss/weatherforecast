@@ -18,6 +18,7 @@ export interface currentWeatherData{
         sunrise: number,
         sunset: number
     },
+    timezone: number,
     weather: Array<{
         description: string,
         main: string

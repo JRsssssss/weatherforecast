@@ -29,11 +29,11 @@ export default function HourlyForecast({namePlace} :CardProps) {
             Hourly Forecast
             <div className='flex rounded-lg border border-gray-200 shadow-sm max-w-7xl mx-auto mt-4 p-4 overflow-x-scroll'>
                 <div className='flex flex-row gap-4'>
-                    {data?.list.slice(6, 30).map((item,index)=>(
+                    {data?.list.slice(0, 24).map((item,index)=>(
                         <div key = {index} className='flex flex-col border rounded-md shadow-sm bg-blue-50'>
-                            <div>{item.dt_txt}</div>
+                            <div>{item.dt}</div>
                             <div>{item.main.temp}</div>
-                            {getWeatherIcon((item.weather[0].description),(item.dt))}
+                            {getWeatherIcon((item.weather[0].description),(item.dt),data.city.timezone)}
                             <div>{item.weather[0].description}</div>
                         </div>
                     ))}
