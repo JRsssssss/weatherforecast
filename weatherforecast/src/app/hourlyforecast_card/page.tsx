@@ -23,7 +23,6 @@ export default function HourlyForecast({namePlace} :CardProps) {
 
         fetchdata();
     }, [namePlace]);
-
     return (
         <div className='flex flex-col'>
             Hourly Forecast
@@ -33,7 +32,7 @@ export default function HourlyForecast({namePlace} :CardProps) {
                         <div key = {index} className='flex flex-col border rounded-md shadow-sm bg-blue-50'>
                             <div>{item.dt}</div>
                             <div>{item.main.temp}</div>
-                            {getWeatherIcon((item.weather[0].description),(item.dt),data.city.timezone)}
+                            {getWeatherIcon((item.weather[0].description),(item.dt),data.city.timezone, false)}
                             <div>{item.weather[0].description}</div>
                         </div>
                     ))}

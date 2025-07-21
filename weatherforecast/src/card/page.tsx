@@ -2,8 +2,9 @@
 import { CardProps } from '@/app/interface/cardprops';
 import { currentWeatherData } from '@/app/interface/currentweather';
 import React, { useEffect, useState } from 'react'
-import { WiNightAltRain } from 'react-icons/wi';
+import { WiThermometer, WiHumidity, WiStrongWind, WiTime2 } from 'react-icons/wi';
 import { getWeatherIcon } from '@/app/Components/Icon';
+import './icon.css';
 
 export default function Card({namePlace}: CardProps) {
   const [data, setData] = useState<currentWeatherData | null>(null);
@@ -24,21 +25,67 @@ export default function Card({namePlace}: CardProps) {
 
     fetchData();
   }, [namePlace]);
+  function convertTimeStamp(unixtimeStamp: number) {
+    const date = new Date(unixtimeStamp * 1000);
+    return {
+      day: date.getDate(),
+      month: date.toLocaleString('en-US', { month: 'long' }),
+      year: date.getFullYear(),
+      time: date.toLocaleTimeString('en-US', { hour12: false }),
+    };
+  }
+  const { day, month, year, time } = data ? convertTimeStamp(data.dt) : {
+    day: '',
+    month: '',
+    year: '',
+    time: '',
+  };
 
   return (
     // delete the border
-    <div className='flex rounded-lg border border-gray-200 shadow-sm max-w-3xl mx-auto justify-center'>
-        {data&&(
+    <div className='flex flex-row rounded-lg border border-gray-200 shadow-sm max-w-2xl mx-auto justify-center'>
+        {data&& (
         // delete the border
-        <div className='flex flex-col border'>
-          <div className='flex flex-col border'>
-            <div className='text-[72px]'>
-              {getWeatherIcon(data.weather[0].description, data.coord.dt, data.timezone)}
+        <div className='flex flex-row'>
+          <div className='flex flex-col w-[200px] justify-center items-center'>
+            <div className='flex flex-col'>
+              <div className='flex items-center gap-1'>
+                <span><WiTime2 size={30} color='#000000'/></span>
+                <div className='flex flex-col'>
+                  <div>
+                    <div className=''>{day} {month} {year}</div>
+                    <div className=''>{time}</div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <h3>{data.name}</h3>
-            <h3>{data.weather[0].description}</h3>
-            <h3>{data.main.temp} celcius</h3>
-            <h3>feel likes {data.main.feels_like} celcius</h3>
+          </div>
+          <div className='flex flex-col'>
+            <div className='flex flex-col text-[50px] items-center'>
+              {data.name} <br />
+              <div className='flex text-[35px] items-center'>
+                <span className=''><WiThermometer size={50} color={data.main.temp < 10? '#2ca7f3' : '#ed812d'}/></span> {data.main.temp}°C
+              </div>
+              <div className='h-[200px]'>
+                {getWeatherIcon(data.weather[0].description, data.dt, data.timezone, true)}
+              </div>
+              <div className='text-[30px]'>
+                "{data.weather[0].description}"
+              </div>
+            </div>
+          </div>
+          <div className='flex flex-col w-[200px] justify-center items-center'>
+            <div className='flex flex-col'>
+              <div className='flex items-center'>
+                <span><WiThermometer size={30} color={data.main.temp < 10? '#2ca7f3' : '#ed812d'}/></span>Feel likes {data.main.feels_like} °C
+              </div>
+              <div className='flex items-center'>
+                <span><WiStrongWind size={30} color='#77f8e8'/></span>Wind Speed {data.wind.speed} k/h
+              </div>
+              <div className='flex items-center'>
+                <span><WiHumidity size={30} color='#316efa'/></span>Humidity {data.main.humidity}%
+              </div>
+            </div>
           </div>
         </div>
       )}

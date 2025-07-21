@@ -1,7 +1,9 @@
 export interface currentWeatherData{
     coord:{
-        dt: number,
+        lat: number,
+        lon: number,
     },
+    dt: number,
     main:{
         feels_like: number,
         grnd_level: number,
