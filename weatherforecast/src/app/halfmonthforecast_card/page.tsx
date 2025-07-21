@@ -38,7 +38,7 @@ export default function SixteenDayForecast({namePlace} :CardProps) {
     <div className='flex flex-col mt-4'>
         <div className='flex justify-center'>
             <div className='flex border p-1 rounded-lg border-gray-200 bg-sky-300'>
-                Daily Forecast 121
+                Daily Forecast
             </div>
         </div>
         <div className='flex rounded-lg border border-gray-200 shadow-sm max-w-7xl mx-auto mt-1 p-4 overflow-x-scroll'>
