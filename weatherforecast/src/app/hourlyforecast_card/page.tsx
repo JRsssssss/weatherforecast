@@ -7,7 +7,14 @@ import { getWeatherIcon } from '../Components/Icon';
 export default function HourlyForecast({namePlace} :CardProps) {
     const [data, setData] = useState<hourlyWeatherData|null>(null);
     const [locationError, setLocationError] = useState<string | null>(null);
-
+    
+    function convertTimeStamp(unixtimeStamp: number, timeoffset: number) {
+        const time = new Date((unixtimeStamp + timeoffset) * 1000);
+        let hours = time.getHours();
+        const period = hours >= 12 ? 'PM' : 'AM';
+        hours = hours % 12 || 12;
+        return { hours, period };
+    }
     useEffect(() => {
         async function fetchdata(){
             try {
@@ -32,14 +39,17 @@ export default function HourlyForecast({namePlace} :CardProps) {
             </div>
             <div className='flex rounded-lg border border-gray-200 shadow-sm max-w-7xl mx-auto mt-1 p-4 overflow-x-scroll'>
                 <div className='flex flex-row gap-4'>
-                    {data?.list.slice(0, 24).map((item,index)=>(
-                        <div key = {index} className='flex flex-col justify-center items-center rounded-md shadow-sm bg-blue-50 w-[200px]'>
-                            <div>{item.dt}</div>
-                            <div>{item.main.temp}</div>
-                            {getWeatherIcon((item.weather[0].description),(item.dt),data.city.timezone, false)}
-                            <div>{item.weather[0].description}</div>
-                        </div>
-                    ))}
+                    {data?.list.slice(0, 24).map((item,index)=>{
+                        const {hours, period} = convertTimeStamp(item.dt, data.city.timezone);
+                        return(
+                            <div key = {index} className='flex flex-col justify-center items-center rounded-md shadow-sm bg-blue-50 w-[200px]'>
+                                    <div >{hours} {period}</div>
+                                    <div>{item.main.temp}</div>
+                                    {getWeatherIcon((item.weather[0].description),(item.dt),data.city.timezone, false)}
+                                    <div>{item.weather[0].description}</div>
+                            </div>
+                        );
+                    })}
                 </div>
                 
             </div>

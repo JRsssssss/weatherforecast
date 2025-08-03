@@ -7,8 +7,7 @@ import { getWeatherIcon } from '../Components/Icon';
 export default function SixteenDayForecast({namePlace} :CardProps) {
   const [data, setData] = useState<halfmonthWeatherData|null>(null);
   const [locationError, setLocationError] = useState<string | null>(null);
-  const [day, setDay] = useState("No");
-  const [month, setMonth] = useState("No");
+
   
   function convertTimeStamp(unixtimeStamp: number) {
     const date = new Date(unixtimeStamp * 1000);
@@ -46,12 +45,12 @@ export default function SixteenDayForecast({namePlace} :CardProps) {
                 {data?.list.map((item, index) => {
                     const { day, month } = convertTimeStamp(item.dt);
                     return (
-                    <div key={index} className='flex flex-col justify-center items-center rounded-md shadow-sm bg-blue-50 w-[200px]'>
-                        <div>{day} {month}</div>
-                        <div>{item.temp.day}°C</div>
-                        {getWeatherIcon(item.weather[0].description, item.dt, data.city.timezone, false)}
-                        <div>{item.weather[0].description}</div>
-                    </div>
+                        <div key={index} className='flex flex-col justify-center items-center rounded-md shadow-sm bg-blue-50 w-[200px]'>
+                            <div>{day} {month}</div>
+                            <div>{item.temp.day}°C</div>
+                            {getWeatherIcon(item.weather[0].description, item.dt, data.city.timezone, false)}
+                            <div>{item.weather[0].description}</div>
+                        </div>
                     );
                 })}
             </div>
